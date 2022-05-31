@@ -36,25 +36,30 @@ function draw() {
         ellipse(point.x, point.y, 16, 16);
     }
     fill(0);
+    if (point) {
+        fill(0, 0, 255);
+        ellipse(point.x, point.y, 16, 16);
+    }
     text(`iteration = ${iteration}`, width - 500, 30);
     text(`weight x = ${perceptron.weights[0]}`, width - 500, 80);
     text(`weight y = ${perceptron.weights[1]}`, width - 500, 130);
 }
 
 let index = 0;
-
+let point;
 const interval = setInterval(() => {
-    if (iteration === 50) {
+    if (iteration === 100) {
         clearInterval(interval);
         return;
     }
-    const point = points[index];
+    point = points[index];
+
     const inputs = [point.x, point.y];
     perceptron.train(inputs, point.label);
     index++;
     index = index >= points.length ? 0 : index;
     iteration++;
-}, 1000);
+}, 200);
 
 class Perceptron {
     weights = [];
