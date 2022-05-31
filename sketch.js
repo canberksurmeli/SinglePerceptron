@@ -41,17 +41,19 @@ function draw() {
     text(`weight y = ${perceptron.weights[1]}`, width - 500, 130);
 }
 
+let index = 0;
+
 const interval = setInterval(() => {
     if (iteration === 50) {
         clearInterval(interval);
         return;
     }
-
-    for (const point of points) {
-        const inputs = [point.x, point.y];
-        perceptron.train(inputs, point.label);
-      }
-      iteration++;
+    const point = points[index];
+    const inputs = [point.x, point.y];
+    perceptron.train(inputs, point.label);
+    index++;
+    index = index >= points.length ? 0 : index;
+    iteration++;
 }, 1000);
 
 class Perceptron {
